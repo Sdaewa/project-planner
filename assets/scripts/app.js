@@ -15,6 +15,7 @@ class ProjectItem {
     connectSwitchBtn() {
         const projectItemEl = document.getElementById(this.id);
         const switchBtn = projectItemEl.querySelector('button:last-of-type');
+        switchBtn.addEventListener('click', )
     }
 };
 
@@ -27,6 +28,14 @@ class ProjectList {
             this.projects.push(new ProjectItem(prjItem.id));
         }
         console.log(this.projects);
+    }
+
+    addProject() {
+
+    }
+    switchProject(projectId) {
+        const projeIndex = this.projects.findIndex(p => p.id === projectId);
+        this.projects.splice(projeIndex, 1);
     }
 };
 
