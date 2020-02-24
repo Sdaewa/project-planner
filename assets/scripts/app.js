@@ -20,6 +20,13 @@ class ProjectItem {
     }
 };
 
+class DOMHelper {
+    static moveElement(elementId, newDestinationSelector) {
+        const element = document.getElementById(elementId);
+        const destinationElement = document.querySelector(newDestinationSelector);
+        destinationElement.append(element);
+    }
+}
 class ProjectList {
     projects = [];
     constructor(type, ) {
@@ -35,13 +42,6 @@ class ProjectList {
     setSwitchHandlerFunction(switchHandlerFunc) {
         this.switchHandler = switchHandlerFunc;
 
-    }
-    class DOMHelper {
-        static moveElement(elementId, newDestinationSelector) {
-            const element = document.getElementById(elementId);
-            const destinationElement = document.querySelector(newDestinationSelector);
-            destinationElement.append(element);
-        }
     }
 
     addProject(project) {
