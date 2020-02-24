@@ -23,9 +23,10 @@ class Component {
 
 class ToolTip extends Component {
 
-    constructor(closeNotFunc) {
-        super('active-projects');
+    constructor(closeNotFunc, text) {
+        super();
         this.closeNot = closeNotFunc;
+        this.text = text;
         this.render();
     }
 
@@ -38,7 +39,7 @@ class ToolTip extends Component {
     render() {
         const tooltipEl = document.createElement('div');
         tooltipEl.className = 'card';
-        tooltipEl.textContent = 'TEST';
+        tooltipEl.textContent = this.text;
         tooltipEl.addEventListener('click', this.closeTooltip);
         this.element = tooltipEl;
     }
@@ -49,6 +50,7 @@ class ProjectItem {
     hasActiveTooltip = false;
 
     constructor(id, updateProjectListsFunc, type) {
+
         this.id = id;
         this.updateProjectLists = updateProjectListsFunc
         this.connectSwitchBtn();
@@ -59,9 +61,12 @@ class ProjectItem {
         if (this.hasActiveTooltip) {
             return;
         }
+        const projectElement = document.getElementById(this.id);
+        const tooltipText = projectElement.dataset.extraInfo;
+        console.log(projectElement.dataset);
         const tooltip = new ToolTip(() => {
             this.hasActiveTooltip = false
-        });
+        }, tooltipText);
         tooltip.attach();
 
         this.hasActiveTooltip = true;
@@ -70,7 +75,7 @@ class ProjectItem {
     connectMoreInfoBtn() {
         const projectItemEl = document.getElementById(this.id);
         const moreInfoBtn = projectItemEl.querySelector('button:first-of-type');
-        moreInfoBtn.addEventListener('click', this.showMoreInfo);
+        moreInfoBtn.addEventListener('click', this.showMoreInfo.bind(this));
     }
 
     connectSwitchBtn(type) {
