@@ -36,8 +36,18 @@ class ProjectList {
         this.switchHandler = switchHandlerFunc;
 
     }
-    addProject() {
-        console.log(this);
+    class DOMHelper {
+        static moveElement(elementId, newDestinationSelector) {
+            const element = document.getElementById(elementId);
+            const destinationElement = document.querySelector(newDestinationSelector);
+            destinationElement.append(element);
+        }
+    }
+
+    addProject(project) {
+        // console.log(this);
+        this.projects.push(project);
+        DOMHelper.moveElement(project.id, `#${this.type}-projects ul`);
     }
     switchProject(projectId) {
         this.switchHandler(this.projects.find(p => p.id === projectId));
