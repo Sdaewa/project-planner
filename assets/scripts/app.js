@@ -1,25 +1,60 @@
 class ToolTip {
-    show() {
+
+    constructor(closeNotFunc) {
+        this.closeNot = closeNotFunc;
+    }
+
+    closeTooltip = () => {
+        this.detach();
+        this.closeNot();
+
+    }
+
+    detach() {
+        this.element.remove();
+        // this.element.parentElement.removeChild(this.element);
+    }
+
+    attach() {
         console.log('ToolTip...');
+        const tooltipEl = document.createElement('div');
+        tooltipEl.className = 'card';
+        tooltipEl.textContent = 'TEST';
+        tooltipEl.addEventListener('click', this.closeTooltip);
+        this.element = tooltipEl;
+        document.body.append(tooltipEl);
     }
 };
 
 class ProjectItem {
+
+    hasActiveTooltip = false;
+
     constructor(id, updateProjectListsFunc, type) {
         this.id = id;
         this.updateProjectLists = updateProjectListsFunc
         this.connectSwitchBtn();
         this.connectMoreInfoBtn(type);
     }
+
     showMoreInfo() {
-        const tooltip = new ToolTip();
-        tooltip.show();
+        if (this.hasActiveTooltip) {
+            return;
+        }
+        const tooltip = new ToolTip(() => {
+            this.hasActiveTooltip = false
+        });
+        tooltip.attach();
+
+        this.hasActiveTooltip = true;
     }
+
     connectMoreInfoBtn() {
         const projectItemEl = document.getElementById(this.id);
         const moreInfoBtn = projectItemEl.querySelector('button:first-of-type');
         moreInfoBtn.addEventListener('click', this.showMoreInfo);
     }
+
     connectSwitchBtn(type) {
         const projectItemEl = document.getElementById(this.id);
         let switchBtn = projectItemEl.querySelector('button:last-of-type');
@@ -35,11 +70,13 @@ class ProjectItem {
 };
 
 class DOMHelper {
+
     static clearEventListener(element) {
         const clonedEl = element.cloneNode(true);
         element.replaceWith(clonedEl);
         return clonedEl;
     }
+
     static moveElement(elementId, newDestinationSelector) {
         const element = document.getElementById(elementId);
         const destinationElement = document.querySelector(newDestinationSelector);
@@ -47,7 +84,9 @@ class DOMHelper {
     }
 }
 class ProjectList {
+
     projects = [];
+
     constructor(type, ) {
         this.type = type;
         const prjItems = document.querySelectorAll(`#${type}-projects li`);
@@ -69,6 +108,7 @@ class ProjectList {
         DOMHelper.moveElement(project.id, `#${this.type}-projects ul`);
         project.update(this.switchProject.bind(this), this.type);
     }
+
     switchProject(projectId) {
         // console.log(this.projects.find(p => p.id === projectId));
         this.switchHandler(this.projects.find(p => p.id === projectId));
@@ -79,6 +119,7 @@ class ProjectList {
 };
 
 class App {
+
     static init() {
         const activeProjectList = new ProjectList('active');
         const finishedProjectList = new ProjectList('finished');
