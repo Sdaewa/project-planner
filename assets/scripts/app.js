@@ -1,5 +1,7 @@
 class ToolTip {
-
+    show() {
+        console.log('ToolTip...');
+    }
 };
 
 class ProjectItem {
@@ -9,9 +11,14 @@ class ProjectItem {
         this.connectSwitchBtn();
         this.connectMoreInfoBtn(type);
     }
-
+    showMoreInfo() {
+        const tooltip = new ToolTip();
+        tooltip.show();
+    }
     connectMoreInfoBtn() {
-
+        const projectItemEl = document.getElementById(this.id);
+        const moreInfoBtn = projectItemEl.querySelector('button:first-of-type');
+        moreInfoBtn.addEventListener('click', this.showMoreInfo);
     }
     connectSwitchBtn(type) {
         const projectItemEl = document.getElementById(this.id);
