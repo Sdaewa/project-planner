@@ -15,12 +15,23 @@ class ProjectItem {
     }
     connectSwitchBtn() {
         const projectItemEl = document.getElementById(this.id);
-        const switchBtn = projectItemEl.querySelector('button:last-of-type');
+        let switchBtn = projectItemEl.querySelector('button:last-of-type');
+        switchBtn = DOMHelper.clearEventListener(switchBtn);
         switchBtn.addEventListener('click', this.updateProjectLists.bind(null, this.id));
+    }
+
+    update(updateProjectListsFunc, type) {
+        this.updateProjectLists = updateProjectListsFunc;
+        this.connectSwitchBtn();
     }
 };
 
 class DOMHelper {
+    static clearEventListener(element) {
+        const clonedEl = element.cloneNode(true);
+        element.replaceWith(clonedElement);
+        return clonedEl;
+    }
     static moveElement(elementId, newDestinationSelector) {
         const element = document.getElementById(elementId);
         const destinationElement = document.querySelector(newDestinationSelector);
@@ -48,6 +59,7 @@ class ProjectList {
         // console.log(this);
         this.projects.push(project);
         DOMHelper.moveElement(project.id, `#${this.type}-projects ul`);
+        project.update(this.switchProject.bind(this), this.type);
     }
     switchProject(projectId) {
         // console.log(this.projects.find(p => p.id === projectId));
