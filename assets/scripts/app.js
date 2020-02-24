@@ -1,7 +1,32 @@
-class ToolTip {
+class Component {
+
+    constructor(hostElementId, insertBefore = false) {
+        if (hostElementId) {
+            this.hostElementId = document.getElementById(hostElementId);
+        } else {
+            this.hostElementId = document.body;
+        }
+        this.insertBefore = insertBefore;
+    }
+
+    detach() {
+        if (this.element) {
+            this.element.remove();
+        }
+    }
+
+    attach() {
+        // console.log('ToolTip...');
+        this.hostElementId.insertAdjacentElement(this.insertBefore ? 'beforebegin' : 'beforeend', this.element);
+    }
+};
+
+class ToolTip extends Component {
 
     constructor(closeNotFunc) {
+        super('active-projects');
         this.closeNot = closeNotFunc;
+        this.render();
     }
 
     closeTooltip = () => {
@@ -10,19 +35,12 @@ class ToolTip {
 
     }
 
-    detach() {
-        this.element.remove();
-        // this.element.parentElement.removeChild(this.element);
-    }
-
-    attach() {
-        console.log('ToolTip...');
+    render() {
         const tooltipEl = document.createElement('div');
         tooltipEl.className = 'card';
         tooltipEl.textContent = 'TEST';
         tooltipEl.addEventListener('click', this.closeTooltip);
         this.element = tooltipEl;
-        document.body.append(tooltipEl);
     }
 };
 
