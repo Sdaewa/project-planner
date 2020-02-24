@@ -16,7 +16,7 @@ class ProjectItem {
     connectSwitchBtn() {
         const projectItemEl = document.getElementById(this.id);
         const switchBtn = projectItemEl.querySelector('button:last-of-type');
-        switchBtn.addEventListener('click', this.updateProjectLists);
+        switchBtn.addEventListener('click', this.updateProjectLists.bind(null, this.id));
     }
 };
 
@@ -50,6 +50,7 @@ class ProjectList {
         DOMHelper.moveElement(project.id, `#${this.type}-projects ul`);
     }
     switchProject(projectId) {
+        // console.log(this.projects.find(p => p.id === projectId));
         this.switchHandler(this.projects.find(p => p.id === projectId));
         this.projects - this.projects.filter(p => p.id !== projectId);
         // const projeIndex = this.projects.findIndex(p => p.id === projectId);
