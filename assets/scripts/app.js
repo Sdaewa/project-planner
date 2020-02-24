@@ -29,7 +29,7 @@ class ProjectItem {
 class DOMHelper {
     static clearEventListener(element) {
         const clonedEl = element.cloneNode(true);
-        element.replaceWith(clonedElement);
+        element.replaceWith(clonedEl);
         return clonedEl;
     }
     static moveElement(elementId, newDestinationSelector) {
