@@ -43,8 +43,16 @@ class ToolTip extends Component {
         // console.log(this.hostElementId.getBoundingClientRect());
         const hostElpositionLeft = this.hostElement.offsetLeft;
         const hostElpositionTop = this.hostElement.offsetTop;
-        const hostElpositionheight = this.hostElement.clientHeight;
+        const hostElpositionHeight = this.hostElement.clientHeight;
+        const parentElementScroll = this.hostElement.parentElement.scrollTop;
+
         const x = hostElpositionLeft + 20;
+        const y = hostElpositionTop + hostElpositionHeight - parentElementScroll - 10;
+
+        tooltipEl.style.position = 'absolute';
+        tooltipEl.style.left = x + 'px';
+        tooltipEl.style.top = y + 'px';
+
         tooltipEl.addEventListener('click', this.closeTooltip);
         this.element = tooltipEl;
     }
