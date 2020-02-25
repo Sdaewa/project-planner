@@ -33,13 +33,15 @@ class ToolTip extends Component {
     closeTooltip = () => {
         this.detach();
         this.closeNot();
-
     }
 
     render() {
         const tooltipEl = document.createElement('div');
         tooltipEl.className = 'card';
-        tooltipEl.textContent = this.text;
+        const tooltipTemplate = document.getElementById('tooltip');
+        const tooltipBody = document.importNode(tooltipTemplate.content, true);
+        tooltipBody.querySelector('p').textContent = this.text;
+        tooltipEl.append(tooltipBody);
         // console.log(this.hostElementId.getBoundingClientRect());
         const hostElpositionLeft = this.hostElement.offsetLeft;
         const hostElpositionTop = this.hostElement.offsetTop;
