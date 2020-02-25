@@ -2,9 +2,9 @@ class Component {
 
     constructor(hostElementId, insertBefore = false) {
         if (hostElementId) {
-            this.hostElementId = document.getElementById(hostElementId);
+            this.hostElement = document.getElementById(hostElementId);
         } else {
-            this.hostElementId = document.body;
+            this.hostElement = document.body;
         }
         this.insertBefore = insertBefore;
     }
@@ -17,14 +17,14 @@ class Component {
 
     attach() {
         // console.log('ToolTip...');
-        this.hostElementId.insertAdjacentElement(this.insertBefore ? 'beforebegin' : 'beforeend', this.element);
+        this.hostElement.insertAdjacentElement(this.insertBefore ? 'beforebegin' : 'beforeend', this.element);
     }
 };
 
 class ToolTip extends Component {
 
-    constructor(closeNotFunc, text) {
-        super();
+    constructor(closeNotFunc, text, hostElementId) {
+        super(hostElementId);
         this.closeNot = closeNotFunc;
         this.text = text;
         this.render();
@@ -40,6 +40,11 @@ class ToolTip extends Component {
         const tooltipEl = document.createElement('div');
         tooltipEl.className = 'card';
         tooltipEl.textContent = this.text;
+        // console.log(this.hostElementId.getBoundingClientRect());
+        const hostElpositionLeft = this.hostElement.offsetLeft;
+        const hostElpositionTop = this.hostElement.offsetTop;
+        const hostElpositionheight = this.hostElement.clientHeight;
+        const x = hostElpositionLeft + 20;
         tooltipEl.addEventListener('click', this.closeTooltip);
         this.element = tooltipEl;
     }
@@ -66,7 +71,7 @@ class ProjectItem {
         console.log(projectElement.dataset);
         const tooltip = new ToolTip(() => {
             this.hasActiveTooltip = false
-        }, tooltipText);
+        }, tooltipText, this.id);
         tooltip.attach();
 
         this.hasActiveTooltip = true;
