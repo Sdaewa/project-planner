@@ -166,6 +166,10 @@ class App {
         const finishedProjectList = new ProjectList('finished');
         activeProjectList.setSwitchHandlerFunction(finishedProjectList.addProject.bind(finishedProjectList));
         finishedProjectList.setSwitchHandlerFunction(activeProjectList.addProject.bind(activeProjectList));
+
+        // const someScript = document.createElement('script');
+        // someScript.textContent = 'alert("TEST")';
+        // document.head.append(someScript);
     }
 };
 
