@@ -1,5 +1,6 @@
 const button = document.querySelector('button');
 const form = document.querySelector('form');
+const div = document.querySelector('div');
 
 const btnHandler = function () {
     alert('Click');
@@ -14,9 +15,16 @@ const btnHandler = function () {
 
 form.addEventListener('submit', event => {
     event.preventDefault();
+    console.log('form');
     console.log(event);
 });
 
 button.addEventListener('click', event => {
+    console.log('button');
+    console.log(event);
+});
+
+div.addEventListener('click', event => {
+    console.log('div')
     console.log(event);
 });
