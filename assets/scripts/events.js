@@ -20,6 +20,7 @@ form.addEventListener('submit', event => {
 });
 
 button.addEventListener('click', event => {
+    event.stopPropagation();
     console.log('button');
     console.log(event);
 });
