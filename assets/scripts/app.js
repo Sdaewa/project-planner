@@ -70,6 +70,7 @@ class ProjectItem {
         this.updateProjectLists = updateProjectListsFunc
         this.connectSwitchBtn();
         this.connectMoreInfoBtn(type);
+        this.connectDrag();
     }
 
     showMoreInfo() {
@@ -104,6 +105,13 @@ class ProjectItem {
     update(updateProjectListsFunc, type) {
         this.updateProjectLists = updateProjectListsFunc;
         this.connectSwitchBtn(type);
+    }
+
+    connectDrag() {
+        document.getElementById(this.id).addEventListener('dragstart', event => {
+            event.dataTransfer.setData('text/plain', this.id);
+            event.dataTransfer.effectAllowed = move;
+        });
     }
 };
 
