@@ -39,6 +39,7 @@ div.addEventListener('click', event => {
 // });
 
 list.addEventListener('click', event => {
-    console.log(event.currentTarget);
-    event.target.classList.toggle('highlight');
+    // console.log(event.currentTarget);
+    // event.target.classList.toggle('highlight');
+    event.target.closest('li').classList.toggle('highlight');
 });
